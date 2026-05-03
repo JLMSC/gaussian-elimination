@@ -1,0 +1,100 @@
+# Gaussian Elimination Algorithm
+
+This work presents a computational implementation of the Gaussian Elimination method for solving systems of linear equations. The system accepts user-defined equations in symbolic string format, converts them into an augmented matrix representation, and applies elementary row operations to obtain a row echelon form. The final solution is computed via back substitution. A graphical interface is provided to facilitate user interaction.
+
+## Introduction
+
+This project implements the method programmatically using Python, with the following objectives:
+
+* Accept arbitrary linear systems as input (string format)
+* Convert symbolic equations into matrix representation
+* Apply Gaussian Elimination to obtain a Row Echelon Form (REF)
+* Compute solutions using Back Substitution
+* Provide a simple graphical user interface (GUI)
+
+## Problem Representation
+
+A linear system is represented as:
+
+$$ A\mathbf{x} = \mathbf{B} $$
+
+Where:
+* $A \in \mathbb{R}^{n \times n}$ : coefficient matrix
+* $\mathbf{x} \in \mathbb{R}^n$ : vector of variables
+* $\mathbf{B} \in \mathbb{R}^n$ : constant vector
+
+The system is internally transformed into an augmented matrix:
+
+$$ [A \mid \mathbf{B}] $$
+
+## Gaussian Elimination
+
+The algorithm transforms the augmented matrix into Row Echelon Form (REF) using elementary row operations:
+
+* **Row Swapping** (pivoting)
+* **Row Scaling** (normalizing pivots)
+* **Row Elimination** (zeroing values below pivots)
+
+This process is implemented in the primary routine:
+`row_echelon_form(A, B)`
+
+## Back Substitution
+
+Once the matrix is in row echelon form, back substitution is applied to compute the solution vector.
+
+Implemented in:
+`back_substitution(M)`
+
+**Steps:**
+1. Traverse rows in reverse order.
+2. Eliminate coefficients above pivots.
+3. Extract the solution from the last column.
+
+## Input Parsing
+
+User-provided equations are parsed using symbolic computation:
+`string_to_augmented_matrix(equations)`
+
+**Responsibilities:**
+* Extract variable names dynamically.
+* Convert expressions using symbolic algebra.
+* Build the coefficient matrix $A$ and vector $\mathbf{B}$.
+
+**Example Input:**
+```text
+3*x + 6*y + 6*w + 8*z = 1
+5*x + 3*y + 6*w = -10
+4*y - 5*w + 8*z = 8
+4*w + 8*z = 9
+```
+
+## Graphical Interface
+
+A simple GUI is implemented using PySimpleGUI:
+* Multiline input for equations
+* Submit / Cancel controls
+* Popup display for results or errors
+
+**Features:**
+* Input validation
+* Automatic enabling/disabling of controls
+* Error handling for singular or invalid systems
+
+## Results
+
+The system successfully computes solutions for valid, non-singular linear systems.
+
+Output is formatted as:
+```text
+x = -1.5414
+y = -0.5223
+w = -0.1210
+z = 1.1855
+```
+
+Invalid or singular systems trigger appropriate error messages.
+
+## Limitations
+
+* Only supports systems with a unique solution.
+* Numerical instability may occur for ill-conditioned matrices (no full pivoting).
